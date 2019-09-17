@@ -37,6 +37,12 @@ class Team(models.Model):
   def get_absolute_url(self):
     return reverse('team_detail', kwargs={'team_id':self.id})
 
+class Day(models.Model):
+  day_counter=models.IntegerField(null=True)
+
+  def __str__(self):
+    return f"Day Number: {self.day_counter}"
+    
 class Game(models.Model):
   player=models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
   points=models.IntegerField(null=True)
@@ -47,7 +53,8 @@ class Game(models.Model):
   turnovers=models.IntegerField(null=True)
   threepointers=models.IntegerField(null=True)
   team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
-  day=models.IntegerField(null=True)
+  day_played = models.ForeignKey(Day, on_delete=models.CASCADE, null=True)
+
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
   def __str__(self):
