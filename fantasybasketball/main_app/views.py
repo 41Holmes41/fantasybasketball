@@ -28,6 +28,7 @@ def add_team(request):
         new_team.save()
     return redirect('team_detail', team_id=new_team.id)
 
+
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     players = Player.objects.all()
@@ -36,6 +37,21 @@ def team_detail(request, team_id):
         'team':team,
         'players':players
     })
+
+def add_player(request, team_id, player_id):
+    
+    Team.objects.get(id=team_id).players.add(player_id)
+    player = Player.objects.get(id=player_id)
+    player.status = False
+    player.save()
+    return redirect('team_detail', team_id=team_id)
+
+def drop_player(request, team_id, player_id):
+    Team.objects.get(id=team_id).players.remove(player_id)
+    player = Player.objects.get(id=player_id)
+    player.status = True
+    player.save()
+    return redirect('team_detail', team_id=team_id)
 
 def signup(request):
     error_message=''

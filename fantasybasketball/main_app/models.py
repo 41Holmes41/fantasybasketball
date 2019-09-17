@@ -19,7 +19,7 @@ class Player(models.Model):
   status=models.BooleanField(null=True) #True means player available / False Player is taken
   
 class Team(models.Model):
-  roster = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
+  players = models.ManyToManyField(Player, null=True)
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   team_name=models.CharField(max_length=50,null=True)
   team_points=models.IntegerField(null=True)

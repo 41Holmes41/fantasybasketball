@@ -11,33 +11,8 @@
             <h2>{{team.team_name}}</h2>
 
 
-            <div class='ui card'>
-                <div class='image'>
-                    <img src="" alt="">
-                </div>
-                <div class='content'>
-                    <a class='header'>Lebron James</a>
-                        <div class='meta'>
-                            <span class='date'>Los Angeles Lakers</span>
-                        </div>
-                        <div class='description'>
-                            Stats Go Here lol
-                        </div>
-                </div>
-                <div class='extra content'>
-                    <a>
-                        <button class='ui red basic button'>Drop Player</button>
-                    </a>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="eight wide column right floated">
-            <h2>Available Players</h2>
-
-
             {% for player in players %}
+            {% if player.status == False %}
             <div class='ui card'>
                     <div class='image'>
                         <img src="" alt="">
@@ -58,11 +33,50 @@
                             </div>
                     </div>
                     <div class='extra content'>
-                        <a>
-                            <button class='ui green basic button'>Add Player</button>
-                        </a>
+                        <form action="{% url 'drop_player' team.id player.id%}" method="post">
+                            {%csrf_token%}
+                            <button type='submit' class='ui red basic button'>Drop Player</button>
+                        </form>
                     </div>
                 </div>
+                {% endif %}
+            {% endfor %}
+
+
+        </div>
+        <div class="eight wide column right floated">
+            <h2>Available Players</h2>
+
+
+            {% for player in players %}
+            {% if player.status == True %}
+            <div class='ui card'>
+                    <div class='image'>
+                        <img src="" alt="">
+                    </div>
+                    <div class='content'>
+                        <a class='header'>{{player.first_name}} {{player.last_name}}</a>
+                            <div class='meta'>
+                                <span class='date'>{{player.nba_team}}</span>
+                            </div>
+                            <div class='description'>
+                                Point Rating: {{player.point_rating}}<br>
+                                Rebound Rating: {{player.rebound_rating}}<br>
+                                Assist Rating: {{player.assist_rating}}<br>
+                                Steal Rating: {{player.steal_rating}}<br>
+                                Block Rating: {{player.block_rating}}<br>
+                                Turnover Rating: {{player.turnover_rating}}<br>
+                                ThreePointer Rating: {{player.threepointer_rating}}<br>
+                            </div>
+                    </div>
+                    <div class='extra content'>
+                        <form action="{% url 'add_player' team.id player.id%}" method="post">
+                            {%csrf_token%}
+                            <button type='submit' class='ui green basic button'>Add Player</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
             {% endfor %}
 
 
