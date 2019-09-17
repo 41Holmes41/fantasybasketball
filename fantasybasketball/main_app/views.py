@@ -5,7 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import TeamForm
-from .models import Player, Team 
+from .models import Player, Team, Game 
+import random
 
 def home(request):
     return render(request, 'home.html')
@@ -56,6 +57,24 @@ def drop_player(request, team_id, player_id):
     player.status = True
     player.save()
     return redirect('team_detail', team_id=team_id)
+
+def simulate_day(request):
+    players=Player.objects.filter(status='False')
+    # print(players)
+    for player in players:
+        game=Game.objects.create()
+        game.player=player
+        game.points=round(player.point_rating * random.random() * 5) + (player.point_rating)
+        # print(game.points)
+        game.rebounds=round(player.rebound_rating * random.random() * 2) + (round(player.rebound_rating/2))
+        game.assists=round(player.assist_rating * random.random() * 1.5) + (round(player.assist_rating/2))
+        game.steals=round(player.steal_rating * random.random() * .5) + (round(random.random()*2))
+        game.blocks=round(player.block_rating * random.random() * .5 + player.block_rating * random.random()*.5)
+        game.turnovers=round((10-player.turnover_rating) * random.random())
+        game.threepointers=round(player.threepointer_rating*random.random()+random.random())
+        game.save()
+    return redirect('dashboard')
+
 
 def signup(request):
     error_message=''

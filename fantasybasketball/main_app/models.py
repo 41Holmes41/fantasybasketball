@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-
 class Player(models.Model):
   first_name=models.CharField(max_length=50,null=True)
   last_name=models.CharField(max_length=50, null=True)
@@ -17,6 +16,9 @@ class Player(models.Model):
   turnover_rating=models.IntegerField(null=True)
   threepointer_rating=models.IntegerField(null=True)
   status=models.BooleanField(null=True) #True means player available / False Player is taken
+
+  def __str__(self):
+    return f'{self.first_name} {self.last_name}'
   
 class Team(models.Model):
   players = models.ManyToManyField(Player, null=True)
@@ -35,6 +37,19 @@ class Team(models.Model):
   def get_absolute_url(self):
     return reverse('team_detail', kwargs={'team_id':self.id})
 
-    
+class Game(models.Model):
+  player=models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
+  points=models.IntegerField(null=True)
+  rebounds=models.IntegerField(null=True)
+  assists=models.IntegerField(null=True)
+  steals=models.IntegerField(null=True)
+  blocks=models.IntegerField(null=True)
+  turnovers=models.IntegerField(null=True)
+  threepointers=models.IntegerField(null=True)
+  team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
+  day=models.IntegerField(null=True)
+
+  def __str__(self):
+    return f"{self.player_id}'s game"
 
   
