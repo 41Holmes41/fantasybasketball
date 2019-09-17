@@ -12,7 +12,11 @@ def home(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    try:
+        team=Team.objects.get(owner_id=request.user.id)
+    except Team.DoesNotExist:
+        team={}
+    return render(request, 'dashboard/dashboard.html',{'team':team})
 
 def create_team(request):
     team_form = TeamForm()

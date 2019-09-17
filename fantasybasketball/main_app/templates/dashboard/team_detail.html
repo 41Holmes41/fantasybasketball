@@ -23,13 +23,28 @@
                                 <span class='date'>{{player.nba_team}}</span>
                             </div>
                             <div class='description'>
-                                Point Rating: {{player.point_rating}}<br>
-                                Rebound Rating: {{player.rebound_rating}}<br>
-                                Assist Rating: {{player.assist_rating}}<br>
-                                Steal Rating: {{player.steal_rating}}<br>
-                                Block Rating: {{player.block_rating}}<br>
-                                Turnover Rating: {{player.turnover_rating}}<br>
-                                ThreePointer Rating: {{player.threepointer_rating}}<br>
+                                <table class='ui unstackable table'>
+                                    <tr>
+                                        <th>PTS</th>
+                                        <th>REB</th>
+                                        <th>AST</th>
+                                        <th>STL</th>
+                                        <th>BLK</th>
+                                        <th>TO</th>
+                                        <th>3PM</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{player.point_rating}}</td>
+                                            <td>{{player.rebound_rating}}</td>
+                                            <td>{{player.assist_rating}}</td>
+                                            <td>{{player.steal_rating}}</td>
+                                            <td>{{player.block_rating}}</td>
+                                            <td>{{player.turnover_rating}}</td>
+                                            <td>{{player.threepointer_rating}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                     </div>
                     <div class='extra content'>
@@ -60,13 +75,28 @@
                                 <span class='date'>{{player.nba_team}}</span>
                             </div>
                             <div class='description'>
-                                Point Rating: {{player.point_rating}}<br>
-                                Rebound Rating: {{player.rebound_rating}}<br>
-                                Assist Rating: {{player.assist_rating}}<br>
-                                Steal Rating: {{player.steal_rating}}<br>
-                                Block Rating: {{player.block_rating}}<br>
-                                Turnover Rating: {{player.turnover_rating}}<br>
-                                ThreePointer Rating: {{player.threepointer_rating}}<br>
+                                    <table class='ui unstackable table'>
+                                            <tr>
+                                                <th>PTS</th>
+                                                <th>REB</th>
+                                                <th>AST</th>
+                                                <th>STL</th>
+                                                <th>BLK</th>
+                                                <th>TO</th>
+                                                <th>3PM</th>
+                                            </tr>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{player.point_rating}}</td>
+                                                    <td>{{player.rebound_rating}}</td>
+                                                    <td>{{player.assist_rating}}</td>
+                                                    <td>{{player.steal_rating}}</td>
+                                                    <td>{{player.block_rating}}</td>
+                                                    <td>{{player.turnover_rating}}</td>
+                                                    <td>{{player.threepointer_rating}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                             </div>
                     </div>
                     <div class='extra content'>
