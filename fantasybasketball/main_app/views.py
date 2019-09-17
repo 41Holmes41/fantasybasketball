@@ -26,7 +26,16 @@ def add_team(request):
         new_team=form.save(commit=False)
         new_team.owner = request.user
         new_team.save()
-    return redirect('dashboard')
+    return redirect('team_detail', team_id=new_team.id)
+
+def team_detail(request, team_id):
+    team = Team.objects.get(id=team_id)
+    players = Player.objects.all()
+    
+    return render(request, 'dashboard/team_detail.html', {
+        'team':team,
+        'players':players
+    })
 
 def signup(request):
     error_message=''

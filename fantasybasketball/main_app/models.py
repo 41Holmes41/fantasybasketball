@@ -9,7 +9,6 @@ class Player(models.Model):
   first_name=models.CharField(max_length=50,null=True)
   last_name=models.CharField(max_length=50, null=True)
   nba_team=models.CharField(max_length=50, null=True)
-  nba_team=models.CharField(max_length=50, null=True)
   point_rating=models.IntegerField(null=True)
   rebound_rating=models.IntegerField(null=True)
   assist_rating=models.IntegerField(null=True)
@@ -33,7 +32,8 @@ class Team(models.Model):
   owner_points=models.TextField(max_length=250, null=True)
   rank=models.IntegerField(null=True)
 
-
+  def get_absolute_url(self):
+    return reverse('team_detail', kwargs={'team_id':self.id})
 
     
 

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class='ui container'>
+    <div class='ui center aligned container'>
+        <h1>Welcome To Your Dream Team!</h1>
+    </div>
+    <div class='ui center aligned grid'>
+        <div class="eight wide column left floated">
+            <h2>{{team.team_name}}</h2>
+
+
+            <div class='ui card'>
+                <div class='image'>
+                    <img src="" alt="">
+                </div>
+                <div class='content'>
+                    <a class='header'>Lebron James</a>
+                        <div class='meta'>
+                            <span class='date'>Los Angeles Lakers</span>
+                        </div>
+                        <div class='description'>
+                            Stats Go Here lol
+                        </div>
+                </div>
+                <div class='extra content'>
+                    <a>
+                        <button class='ui red basic button'>Drop Player</button>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="eight wide column right floated">
+            <h2>Available Players</h2>
+
+
+            {% for player in players %}
+            <div class='ui card'>
+                    <div class='image'>
+                        <img src="" alt="">
+                    </div>
+                    <div class='content'>
+                        <a class='header'>{{player.first_name}} {{player.last_name}}</a>
+                            <div class='meta'>
+                                <span class='date'>{{player.nba_team}}</span>
+                            </div>
+                            <div class='description'>
+                                {{player.point_rating}}<br>
+                                {{player.rebound_rating}}<br>
+                                {{player.assist_rating}}<br>
+                                {{player.steal_rating}}<br>
+                                {{player.block_rating}}<br>
+                                {{player.turnover_rating}}<br>
+                                {{player.threepointer_rating}}<br>
+                            </div>
+                    </div>
+                    <div class='extra content'>
+                        <a>
+                            <button class='ui red basic button'>Drop Player</button>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Welcome to Your Dream Team</h1>
+
+<h2>{{team.team_name}}</h2>
+
+{% for player in players %}
+    <p>{{ player.first_name }}</p>
+{% endfor %} -->
+{% endblock %}
