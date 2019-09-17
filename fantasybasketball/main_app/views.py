@@ -37,16 +37,19 @@ def add_team(request):
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     players = Player.objects.all()
+    myplayers = Player.objects.filter(owner=request.user)
     
     return render(request, 'dashboard/team_detail.html', {
         'team':team,
-        'players':players
+        'players':players,
+        'myplayers':myplayers,
     })
 
 def add_player(request, team_id, player_id):
     
     Team.objects.get(id=team_id).players.add(player_id)
     player = Player.objects.get(id=player_id)
+    player.owner = request.user
     player.status = False
     player.save()
     return redirect('team_detail', team_id=team_id)
@@ -54,6 +57,7 @@ def add_player(request, team_id, player_id):
 def drop_player(request, team_id, player_id):
     Team.objects.get(id=team_id).players.remove(player_id)
     player = Player.objects.get(id=player_id)
+    player.owner=None
     player.status = True
     player.save()
     return redirect('team_detail', team_id=team_id)
@@ -64,6 +68,7 @@ def simulate_day(request):
     for player in players:
         game=Game.objects.create()
         game.player=player
+        game.owner=player.owner 
         game.points=round(player.point_rating * random.random() * 5) + (player.point_rating)
         # print(game.points)
         game.rebounds=round(player.rebound_rating * random.random() * 2) + (round(player.rebound_rating/2))
@@ -75,7 +80,13 @@ def simulate_day(request):
         game.save()
     return redirect('dashboard')
 
-
+def results(request):
+    teams=Team.objects.all()
+    games=Game.objects.all()
+    return render(request, 'dashboard/results.html', {
+        'teams':teams,
+        'games':games,
+    })
 def signup(request):
     error_message=''
     if request.method == 'POST':

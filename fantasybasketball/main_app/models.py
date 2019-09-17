@@ -16,7 +16,7 @@ class Player(models.Model):
   turnover_rating=models.IntegerField(null=True)
   threepointer_rating=models.IntegerField(null=True)
   status=models.BooleanField(null=True) #True means player available / False Player is taken
-
+  owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   def __str__(self):
     return f'{self.first_name} {self.last_name}'
   
@@ -48,6 +48,7 @@ class Game(models.Model):
   threepointers=models.IntegerField(null=True)
   team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
   day=models.IntegerField(null=True)
+  owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
   def __str__(self):
     return f"{self.player_id}'s game"

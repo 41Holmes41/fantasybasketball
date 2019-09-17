@@ -11,8 +11,8 @@
             <h2>{{team.team_name}}</h2>
 
 
-            {% for player in players %}
-            {% if player.status == False %}
+            {% for player in myplayers %}
+            <!-- {% if player.status == False %} -->
             <div class='ui card'>
                     <div class='image'>
                         <img src="" alt="">
@@ -54,7 +54,7 @@
                         </form>
                     </div>
                 </div>
-                {% endif %}
+                <!-- {% endif %} -->
             {% endfor %}
 
 

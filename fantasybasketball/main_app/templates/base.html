@@ -23,6 +23,7 @@
             {% if user.is_authenticated %}
                 {% if team %}
                 <a class="item" href="{% url 'team_detail' team.id %}">View Dream Team</a>
+                <a class="item" href="{% url 'results' %}">View Results</a>
                 {% else %}
                 <a class="item" href="{% url 'create_team' %}">Create Your Dream Team</a>
                 {% endif %}

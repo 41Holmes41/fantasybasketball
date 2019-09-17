@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='ui container'>
+    <div class='ui center aligned container'>
+        <h1>Results</h1>
+        </div>
+        <div class='ui center aligned grid'>
+            <div class="eight wide column left floated">
+                {% for team in teams %}
+                <h2>{{team.team_name}}</h2>
+                {% if player.status == False %}
+                <div class='ui card'>
+                        <div class='image'>
+                            <img src="" alt="">
+                        </div>
+                        <div class='content'>
+                            <a class='header'>{{player.first_name}} {{player.last_name}}</a>
+                                <div class='meta'>
+                                    <span class='date'>{{player.nba_team}}</span>
+                                </div>
+                                <div class='description'>
+                                    <table class='ui unstackable table'>
+                                        <tr>
+                                            <th>PTS</th>
+                                            <th>REB</th>
+                                            <th>AST</th>
+                                            <th>STL</th>
+                                            <th>BLK</th>
+                                            <th>TO</th>
+                                            <th>3PM</th>
+                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{player.point_rating}}</td>
+                                                <td>{{player.rebound_rating}}</td>
+                                                <td>{{player.assist_rating}}</td>
+                                                <td>{{player.steal_rating}}</td>
+                                                <td>{{player.block_rating}}</td>
+                                                <td>{{player.turnover_rating}}</td>
+                                                <td>{{player.threepointer_rating}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                        <div class='extra content'>
+                            <form action="{% url 'drop_player' team.id player.id%}" method="post">
+                                {%csrf_token%}
+                                <button type='submit' class='ui red basic button'>Drop Player</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% for team in teams%}
+{{team.team_name}}
+{%endfor%} -->
+{% endblock %}
