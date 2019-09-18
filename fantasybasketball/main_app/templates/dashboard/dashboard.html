@@ -6,7 +6,11 @@
         <div class="row">
           <div class="three wide column">
             <h1>Leader Board</h1>
+            {% for team in owner_point_rankings%}
+            <p>{{team.team_name}} {{team.owner_points}} pts</p>
+            {% endfor %}
           </div>
+          
           <div class="ten wide column">
             <p></p>
           </div>
