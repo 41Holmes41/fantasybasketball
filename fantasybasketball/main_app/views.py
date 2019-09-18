@@ -129,8 +129,12 @@ def simulate_day(request):
         team.team_blocks+=game.blocks
         team.team_turnovers+=game.turnovers
         team.team_threepointers+=game.threepointers
+        team.players.clear()
         team.save()
 
+        player.owner=None
+        player.status=True
+        player.save()
     
 
     return redirect('dashboard')
