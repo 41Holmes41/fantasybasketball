@@ -4,11 +4,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-
 class Player(models.Model):
   first_name=models.CharField(max_length=50,null=True)
   last_name=models.CharField(max_length=50, null=True)
-  nba_team=models.CharField(max_length=50, null=True)
   nba_team=models.CharField(max_length=50, null=True)
   point_rating=models.IntegerField(null=True)
   rebound_rating=models.IntegerField(null=True)
@@ -18,9 +16,12 @@ class Player(models.Model):
   turnover_rating=models.IntegerField(null=True)
   threepointer_rating=models.IntegerField(null=True)
   status=models.BooleanField(null=True) #True means player available / False Player is taken
+  owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+  def __str__(self):
+    return f'{self.first_name} {self.last_name}'
   
 class Team(models.Model):
-  roster = models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
+  players = models.ManyToManyField(Player)
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   team_name=models.CharField(max_length=50,null=True)
   team_points=models.IntegerField(null=True)
@@ -33,8 +34,30 @@ class Team(models.Model):
   owner_points=models.TextField(max_length=250, null=True)
   rank=models.IntegerField(null=True)
 
+  def get_absolute_url(self):
+    return reverse('team_detail', kwargs={'team_id':self.id})
 
+class Day(models.Model):
+  day_counter=models.IntegerField(null=True)
 
-    
+  def __str__(self):
+    return f"Day Number: {self.day_counter}"
+
+class Game(models.Model):
+  player=models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
+  points=models.IntegerField(null=True)
+  rebounds=models.IntegerField(null=True)
+  assists=models.IntegerField(null=True)
+  steals=models.IntegerField(null=True)
+  blocks=models.IntegerField(null=True)
+  turnovers=models.IntegerField(null=True)
+  threepointers=models.IntegerField(null=True)
+  team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
+  day_played = models.ForeignKey(Day, on_delete=models.CASCADE, null=True)
+
+  owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+  def __str__(self):
+    return f"{self.player_id}'s game"
 
   
