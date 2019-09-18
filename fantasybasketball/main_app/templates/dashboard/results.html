@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='ui container'>
+    <div class='ui center aligned container'>
+        <h1>Results</h1>
+        </div>
+        <div class='ui center aligned grid'>
+            <div class="eight wide column left floated">
+                {% for team in teams %}
+                <h2>{{team.team_name}}</h2>
+                    {% for game in games%}
+                    {% if game.owner == team.owner%}
+                <div class='ui card'>
+                        <div class='image'>
+                            <img src="" alt="">
+                        </div>
+                        <div class='content'>
+                            <a class='header'>{{game.player.first_name}} {{game.player.last_name}}</a>
+                                <div class='meta'>
+                                    <span class='date'>{{game.player.nba_team}}</span>
+                                </div>
+                                <div class='description'>
+                                    <table class='ui unstackable table'>
+                                        <tr>
+                                            <th>PTS</th>
+                                            <th>REB</th>
+                                            <th>AST</th>
+                                            <th>STL</th>
+                                            <th>BLK</th>
+                                            <th>TO</th>
+                                            <th>3PM</th>
+                                        </tr>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{game.points}}</td>
+                                                <td>{{game.rebounds}}</td>
+                                                <td>{{game.assists}}</td>
+                                                <td>{{game.steals}}</td>
+                                                <td>{{game.blocks}}</td>
+                                                <td>{{game.turnovers}}</td>
+                                                <td>{{game.threepointers}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+            </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% for team in teams%}
+{{team.team_name}}
+{%endfor%} -->
+{% endblock %}
