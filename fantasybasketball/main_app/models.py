@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse 
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 
 
@@ -24,15 +25,18 @@ class Team(models.Model):
   players = models.ManyToManyField(Player)
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   team_name=models.CharField(max_length=50,null=True)
-  team_points=models.IntegerField(null=True)
-  team_rebounds=models.IntegerField(null=True)
-  team_assists=models.IntegerField(null=True)
-  team_steals=models.IntegerField(null=True)
-  team_blocks=models.IntegerField(null=True)
-  team_turnovers=models.IntegerField(null=True)
-  team_threepointers=models.IntegerField(null=True)
-  owner_points=models.TextField(max_length=250, null=True)
-  rank=models.IntegerField(null=True)
+  team_points=models.IntegerField(default=0, null=True)
+  team_rebounds=models.IntegerField(default=0, null=True)
+  team_assists=models.IntegerField(default=0, null=True)
+  team_steals=models.IntegerField(default=0, null=True)
+  team_blocks=models.IntegerField(default=0, null=True)
+  team_turnovers=models.IntegerField(default=0, null=True)
+  team_threepointers=models.IntegerField(default=0, null=True)
+  owner_points=models.IntegerField(default=0, null=True)
+  rank=models.IntegerField(default=0, null=True)
+  
+  def __str__(self):
+    return f"{self.team_name}"
 
   def get_absolute_url(self):
     return reverse('team_detail', kwargs={'team_id':self.id})
@@ -55,10 +59,17 @@ class Game(models.Model):
   threepointers=models.IntegerField(null=True)
   team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
   day_played = models.IntegerField(null=True)
-
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
   def __str__(self):
     return f"{self.player_id}'s game on day {self.day_played}"
 
-  
+class Rankings(models.Model):
+  points_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  rebounds_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  blocks_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  steals_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  turnovers_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  threepointers_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  assists_team_ranking = ArrayField(models.IntegerField(default=0, null=True))
+  owner_points_team_ranking = ArrayField(models.IntegerField(default=0, null=True))

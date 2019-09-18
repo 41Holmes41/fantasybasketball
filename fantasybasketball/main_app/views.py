@@ -19,6 +19,7 @@ def dashboard(request):
         team=Team.objects.get(owner_id=request.user.id)
     except Team.DoesNotExist:
         team={}
+
     return render(request, 'dashboard/dashboard.html',{'team':team})
 
 def create_team(request):
@@ -71,7 +72,7 @@ def simulate_day(request):
     day.save()
     # print(players)
     for player in players:
-       
+        team=Team.objects.get(owner=player.owner)
         game=Game.objects.create()
         game.player=player
         game.owner=player.owner 
@@ -85,9 +86,35 @@ def simulate_day(request):
         game.turnovers=round((10-player.turnover_rating) * random.random())
         game.threepointers=round(player.threepointer_rating*random.random()+random.random())
         game.save()
+
+        team.team_points+=game.points
+        team.team_rebounds+=game.rebounds
+        team.team_assists+=game.assists
+        team.team_steals+=game.steals
+        team.team_blocks+=game.blocks
+        team.team_turnovers+=game.turnovers
+        team.team_threepointers+=game.threepointers
+        team.save()
     return redirect('dashboard')
 
 def results(request):
+    teams=Team.objects.all()
+    games=Game.objects.all()
+    day=Day.objects.get()
+    days=[]
+    for day in range(day.day_counter):
+        days.append(day + 1)
+    print(games[34].owner, teams[2].owner)
+
+
+
+    return render(request, 'dashboard/results.html', {
+        'teams':teams,
+        'games':games,
+        'days':days,
+    })
+
+""" def dayresults(request):
     teams=Team.objects.all()
     games=Game.objects.all()
     day=Day.objects.get()
@@ -100,7 +127,8 @@ def results(request):
         'teams':teams,
         'games':games,
         'days':days,
-    })
+        'selected_day': day_num,
+    }) """
 
 def start_league(request):
     day = Day.objects.create()

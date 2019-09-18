@@ -16,3 +16,4 @@ urlpatterns = [
   
 ]
 
+"""   path('dashboard/results/<int:day_num>/', views.dayresults, name='dayresults'), """
