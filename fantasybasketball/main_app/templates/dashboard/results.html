@@ -1,74 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class='ui container'>
-    <div class='ui center aligned container'>
-        <h1>Results</h1>
-        </div>
-        <div class='ui center aligned grid'>
-            <div class="eight wide column left floated">
+    <h1>Results</h1>
+
+    <div class="ui top attached tabular menu">
+    {% for day in days %}
+        <a class="item" data-tab="{{day}}">Day {{day}}</a>
+    {%endfor%}
+    </div>
+    {% for day in days %}
+        <div class="ui bottom attached tab segment" data-tab="{{day}}">
+            <div class=" ui four cards">
                 {% for team in teams %}
-                <h2>{{team.team_name}}</h2>
-                    {% for game in games%}
-                    {% if game.owner == team.owner%}
-                <div class='ui card'>
-                        <div class='image'>
-                            <img src="" alt="">
+                <div class="ui card">
+                    <h1>{{team.team_name}}</h1>
+                    {% for game in games %}
+                    {% if game.day_played == day %}
+                    {% if game.owner  == team.owner %}
+                        <div class="ui card">
+                            <table>
+                                <h5 style="margin: 0">{{game.player.first_name}} {{game.player.last_name}}</h5>
+                                <h6 style="margin: 0">{{game.player.nba_team}}</h6>
+                                <tr>
+                                    <td>PTS</td>
+                                    <td>3PM</td>
+                                    <td>REB</td>
+                                    <td>AST</td>
+                                    <td>STL</td>
+                                    <td>BLK</td>
+                                    <td>TO</td>
+                                </tr>
+                                <tr>
+                                    <td>{{game.points}}</td>
+                                    <td>{{game.threepointers}}</td>
+                                    <td>{{game.rebounds}}</td>
+                                    <td>{{game.assists}}</td>
+                                    <td>{{game.steals}}</td>
+                                    <td>{{game.blocks}}</td>
+                                    <td>{{game.turnovers}}</td>
+                                </tr>
+                            </table>
                         </div>
-                        <div class='content'>
-                            <a class='header'>{{game.player.first_name}} {{game.player.last_name}}</a>
-                                <div class='meta'>
-                                    <span class='date'>{{game.player.nba_team}}</span>
-                                </div>
-                                <div class='description'>
-                                    <table class='ui unstackable table'>
-                                        <tr>
-                                            <th>PTS</th>
-                                            <th>REB</th>
-                                            <th>AST</th>
-                                            <th>STL</th>
-                                            <th>BLK</th>
-                                            <th>TO</th>
-                                            <th>3PM</th>
-                                        </tr>
-                                        <tbody>
-                                            <tr>
-                                                <td>{{game.points}}</td>
-                                                <td>{{game.rebounds}}</td>
-                                                <td>{{game.assists}}</td>
-                                                <td>{{game.steals}}</td>
-                                                <td>{{game.blocks}}</td>
-                                                <td>{{game.turnovers}}</td>
-                                                <td>{{game.threepointers}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                        </div>
-
-                    </div>
-
                     {% endif %}
-                  {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
                 {% endfor %}
             </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- {% for team in teams%}
-{{team.team_name}}
-{%endfor%} -->
+        </div>
+    {%endfor%}
+<script>
+$('.menu .item')
+  .tab()
+;
+</script>
 {% endblock %}
