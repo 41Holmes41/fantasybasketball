@@ -21,7 +21,7 @@ class Player(models.Model):
     return f'{self.first_name} {self.last_name}'
   
 class Team(models.Model):
-  players = models.ManyToManyField(Player, null=True)
+  players = models.ManyToManyField(Player)
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
   team_name=models.CharField(max_length=50,null=True)
   team_points=models.IntegerField(null=True)
@@ -42,7 +42,7 @@ class Day(models.Model):
 
   def __str__(self):
     return f"Day Number: {self.day_counter}"
-    
+
 class Game(models.Model):
   player=models.ForeignKey(Player, on_delete=models.CASCADE, null=True)
   points=models.IntegerField(null=True)
