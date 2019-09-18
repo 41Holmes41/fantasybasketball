@@ -5,8 +5,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import TeamForm
-from .models import Player, Team, Game 
+from .models import Player, Team, Game, Day
 import random
+
+
 
 def home(request):
     return render(request, 'home.html')
@@ -64,11 +66,16 @@ def drop_player(request, team_id, player_id):
 
 def simulate_day(request):
     players=Player.objects.filter(status='False')
+    day=Day.objects.get()
+    day.day_counter+=1
+    day.save()
     # print(players)
     for player in players:
+       
         game=Game.objects.create()
         game.player=player
         game.owner=player.owner 
+        game.day_played=day.day_counter
         game.points=round(player.point_rating * random.random() * 5) + (player.point_rating)
         # print(game.points)
         game.rebounds=round(player.rebound_rating * random.random() * 2) + (round(player.rebound_rating/2))
@@ -83,10 +90,24 @@ def simulate_day(request):
 def results(request):
     teams=Team.objects.all()
     games=Game.objects.all()
+    day=Day.objects.get()
+    days=[]
+    for day in range(day.day_counter):
+        days.append(day + 1)
+    print(days)
+
     return render(request, 'dashboard/results.html', {
         'teams':teams,
         'games':games,
+        'days':days,
     })
+
+def start_league(request):
+    day = Day.objects.create()
+    day.day_counter=0
+    day.save()
+    return redirect('dashboard')
+
 def signup(request):
     error_message=''
     if request.method == 'POST':

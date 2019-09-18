@@ -39,6 +39,7 @@ class Team(models.Model):
 
 class Day(models.Model):
   day_counter=models.IntegerField(null=True)
+  created_on = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
     return f"Day Number: {self.day_counter}"
@@ -53,11 +54,11 @@ class Game(models.Model):
   turnovers=models.IntegerField(null=True)
   threepointers=models.IntegerField(null=True)
   team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
-  day_played = models.ForeignKey(Day, on_delete=models.CASCADE, null=True)
+  day_played = models.IntegerField(null=True)
 
   owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
   def __str__(self):
-    return f"{self.player_id}'s game"
+    return f"{self.player_id}'s game on day {self.day_played}"
 
   
